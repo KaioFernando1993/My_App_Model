@@ -1,0 +1,268 @@
+<mvc:View controllerName="application.controller.Detail"
+xmlns:smartForm="sap.ui.comp.smartform" 
+xmlns:mvc="sap.ui.core.mvc" 
+xmlns:core="sap.ui.core"
+xmlns:main="sap.ui.webc.main" 
+xmlns="sap.m">
+<Page title="{i18n>detailTitle}">
+    <Panel class="sapUiSmallMargin">
+        <!-- Contract -->
+        <VBox>
+            <HBox alignItems="Center" justifyContent="SpaceBetween">
+                <Title text="{i18n>contract}" />
+                <SearchField width="90%" search="onSearchDetail" />
+            </HBox>
+        </VBox>
+        <Table id="tableDataContract" items="{orderDetails>/}">
+            <columns>
+                <Column>
+                    <Text text="{i18n>OrderID}" />
+                </Column>
+                <Column>
+                    <Text text="{i18n>ProductID}" />
+                </Column>
+                <Column>
+                    <Text text="{i18n>UnitPrice}" />
+                </Column>
+                <Column>
+                    <Text text="{i18n>Quantity}" />
+                </Column>
+                <Column>
+                    <Text text="{i18n>Discount}" />
+                </Column>
+            </columns>
+            <items>
+                <ColumnListItem>
+                    <cells>
+                        <!-- Aqui preenche com os bindings dos dados -->
+                        <Text text="{orderDetails>OrderID}" />
+                        <Text text="{orderDetails>ProductID}" />
+                        <Text text="{orderDetails>UnitPrice}" />
+                        <Text text="{orderDetails>Quantity}" />
+                        <Text text="{orderDetails>Discount}" />
+                    </cells>
+                </ColumnListItem>
+            </items>
+        </Table>
+    </Panel>
+    <!-- Agrotools -->
+    <Panel class="sapUiSmallMargin" >
+        <smartForm:SmartForm title="{i18n>agrotools}" id="smartForm" editable="true" useHorizontalLayout="true">
+            <smartForm:Group>
+                <!-- Column 1 -->
+                <smartForm:GroupElement >
+                    <VBox>
+                        <VBox class="sapUiTinyMargin">
+                            <Label text="{i18n>document}" />
+                            <Input value="{/campo1}" placeholder="{i18n>keySearch}" width="100%" search="" />
+                        </VBox>
+                        <VBox class="sapUiTinyMargin">
+                            <Label text="{i18n>municipality}" />
+                            <Select change="handleChange" width="100%">
+                                <items>
+                                    <core:Item text="" />
+                                    <core:Item text="" />
+                                    <core:Item text="" />
+                                </items>
+                            </Select>
+                        </VBox>
+                    </VBox>
+                </smartForm:GroupElement>
+                <!-- Column 2 -->
+                <smartForm:GroupElement >
+                    <VBox>
+                        <VBox class="sapUiTinyMargin">
+                            <Label text="{i18n>contact}" />
+                            <Input value="{/campo2}" placeholder="{i18n>text}" width="90%" search="" />
+                        </VBox>
+                        <VBox class="sapUiTinyMargin">
+                            <Label text="{i18n>harvest}" />
+                            <Input value="{/campo3}" placeholder="{i18n>text}" width="90%" search="" />
+                        </VBox>
+                    </VBox>
+                </smartForm:GroupElement>
+                <!-- Column 3 -->
+                <smartForm:GroupElement >
+                    <VBox>
+                        <VBox class="sapUiTinyMargin">
+                            <Label text="{i18n>volumeTaded}" required="true" />
+                            <Input value="{/campo4}" placeholder="{i18n>text}" width="90%" search="" />
+                        </VBox>
+                        <VBox class="sapUiTinyMargin">
+                            <Label text="{i18n>volumeAvailable}" />
+                            <Input value="{/campo5}" placeholder="{i18n>text}" width="90%" search="" />
+                        </VBox>
+                    </VBox>
+                </smartForm:GroupElement>
+                <!-- Column 4 -->
+                <smartForm:GroupElement >
+                    <VBox>
+                        <VBox class="sapUiTinyMargin">
+                            <Label text="{i18n>deliveryDate}" />
+                            <Input value="{/campo6}" placeholder="{i18n>keySearch}" width="90%" search="" />
+                        </VBox>
+                    </VBox>
+                </smartForm:GroupElement>
+            </smartForm:Group>
+        </smartForm:SmartForm>
+
+        <Table id="" items="{/tableData}">
+            <columns>
+                <Column>
+                    <Text text="{i18n>opinionsCriterion}" />
+                </Column>
+                <Column>
+                    <Text text="{i18n>opinionsFarmA}" />
+                </Column>
+                <Column>
+                    <Text text="{i18n>opinionsFarmB}" />
+                </Column>
+                <Column>
+                    <Text text="{i18n>opinionsContract}" />
+                </Column>
+                <Column>
+                    <Text text="{i18n>opinionsQuantity}" />
+                </Column>
+                <Column>
+                    <Text text="{i18n>opinionsDateDelivery}" />
+                </Column>
+                <Column>
+                    <Label />
+                </Column>
+            </columns>
+            <items>
+                <ColumnListItem>
+                    <cells>
+                        <Input value="{Data}" editable="{viewModel>/isEditMode}" />
+                        <Input value="{CodigoBP}" editable="{viewModel>/isEditMode}" />
+                        <Input value="{Documento}" editable="{viewModel>/isEditMode}" />
+                        <Input value="{Nome}" editable="{viewModel>/isEditMode}" />
+                        <Input value="{Municio}" editable="{viewModel>/isEditMode}" />
+                        <Input value="{StatusBP}" editable="{viewModel>/isEditMode}" />
+                        <Button design="Transparent" press="onEditPress" icon="sap-icon://edit" />
+                    </cells>
+                </ColumnListItem>
+            </items>
+        </Table>
+    </Panel>
+    <!-- Criterion -->
+    <Panel class="sapUiSmallMargin" headerText="{i18n>opinions}">
+        <smartForm:SmartForm editable="true" useHorizontalLayout="true">
+            <smartForm:Group>
+                <!-- Column 1 -->
+                <smartForm:GroupElement>
+                    <VBox>
+                        <!-- BP SAP -->
+                        <VBox class="sapUiTinyMargin">
+                            <Label text="{i18n>bpSap}" />
+                            <Input id="bpSap" value="{/bpSap}" placeholder="{i18n>text}" width="90%" />
+                        </VBox>
+                        <!-- N° parecer -->
+                        <VBox class="sapUiTinyMargin">
+                            <Label text="{i18n>nCriterion}" />
+                            <Input value="{/campo8}" placeholder="{i18n>keySearch}" width="90%" />
+                        </VBox>
+                    </VBox>
+                </smartForm:GroupElement>
+                <!-- Column 2 -->
+                <smartForm:GroupElement>
+                    <VBox>
+                        <!-- Status Parecer -->
+                        <VBox class="sapUiTinyMargin">
+                            <Label text="{i18n>stateCriterion}" />
+                            <Select change="handleChange" width="90%">
+                                <items>
+                                    <core:Item text="" />
+                                    <core:Item text="" />
+                                    <core:Item text="" />
+                                </items>
+                            </Select>
+                        </VBox>
+                        <!-- Motivo Anmálize -->
+                        <VBox class="sapUiTinyMargin">
+                            <Label text="{i18n>reasonAnalyze}" />
+                            <Select change="handleChange" width="90%">
+                                <items>
+                                    <core:Item text="" />
+                                    <core:Item text="" />
+                                    <core:Item text="" />
+                                </items>
+                            </Select>
+                        </VBox>
+                    </VBox>
+                </smartForm:GroupElement>
+                <!-- Column 3 -->
+                <smartForm:GroupElement>
+                    <VBox >
+                        <!-- Anexar Parecer -->
+                        <VBox class="sapUiTinyMargin">
+                            <Label text="{i18n>attachOpinion}" />
+                            <main:FileUploader
+                                value="{/campo9}"
+                                placeholder="{i18n>opinionsSearch}"
+                                width="100%"
+                                uploadUrl="{suaURLdeUpload}"
+                                uploadComplete="onUploadComplete"
+                                change="onFileChange"
+                                
+                                />
+                            
+                        </VBox>
+                        <!-- Nao Conformidade -->
+                        <VBox class="sapUiTinyMargin">
+                            <Label text="{i18n>noCompliance}" />
+                            <Select change="handleChange" width="90%">
+                                <items>
+                                    <core:Item text="SEMA" />
+                                    <core:Item text="SEMA POLÍCONO" />
+                                    <core:Item text="IBAMA POLÍCONO" />
+                                </items>
+                            </Select>
+                        </VBox>
+                    </VBox>
+                </smartForm:GroupElement>
+                <!-- Column 4 -->
+                <smartForm:GroupElement>
+                    <VBox>
+                        <!-- Motivo Parecer -->
+                        <VBox class="sapUiTinyMargin">
+                            <Label text="{i18n>reasonOpinion}" />
+                            <Select change="handleChange" width="90%">
+                                <items>
+                                    <core:Item text="" />
+                                    <core:Item text="" />
+                                    <core:Item text="" />
+                                </items>
+                            </Select>
+                        </VBox>
+                        <!-- Conformidade Desmatamento -->
+                        <VBox class="sapUiTinyMargin">
+                            <Label text="{i18n>complianceDeforestation}" />
+                            <Select change="handleChange" width="90%">
+                                <items>
+                                    <core:Item text="" />
+                                    <core:Item text="" />
+                                    <core:Item text="" />
+                                </items>
+                            </Select>
+                        </VBox>
+                    </VBox>
+                </smartForm:GroupElement>
+            </smartForm:Group>
+        </smartForm:SmartForm>
+    </Panel> 
+    <!-- Footer -->
+    <footer>
+        <Bar>
+            <contentRight>
+            <Button 
+                text="{i18n>registerOpinion}" 
+                icon="sap-icon://add-activity" 
+                type="Emphasized" 
+                press="onEscapePreventDialogPress" 
+                ariaHasPopup="Dialog"/>
+            </contentRight>
+        </Bar>
+    </footer>
+</Page>
+</mvc:View>

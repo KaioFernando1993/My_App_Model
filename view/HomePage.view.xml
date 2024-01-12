@@ -1,0 +1,150 @@
+<mvc:View controllerName="application.controller.HomePage"
+   xmlns:app="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1"
+   xmlns:smartForm="sap.ui.comp.smartform"
+   xmlns:main="sap.ui.webc.main"
+   xmlns:mvc="sap.ui.core.mvc"
+   xmlns:core="sap.ui.core"
+   xmlns="sap.m"
+   width="100%">
+
+   <Page title="{i18n>appTitle}">
+      <smartForm:SmartForm class="sapUiSmallMargin" id="smartForm" editable="true" useHorizontalLayout="true">
+         <smartForm:Group>
+            <!-- Grupo de Filtros (Column 1) -->
+            <smartForm:GroupElement class="sapUiResponsiveMargin">
+               <VBox>
+                  <!-- OrderID -->
+                  <VBox class="sapUiTinyMargin">
+                     <Label text="{i18n>orderIDLabel}" />
+                     <SearchField value="" placeholder="{i18n>orderIDPlaceholder}" width="100%" id="onSearchOrderId"/>
+                  </VBox>
+                  <!-- CustomerID -->
+                  <VBox class="sapUiTinyMargin">
+                     <Label text="{i18n>customerIDLabel}" />
+                     <SearchField value="" placeholder="{i18n>customerIDPlaceholder}" width="100%" id="onSearchCodeBp"/>
+                  </VBox>
+                  <!-- EmployeeID -->
+                  <VBox class="sapUiTinyMargin">
+                     <Label text="{i18n>employeeIDLabel}" />
+                     <SearchField value="" placeholder="{i18n>employeeIDPlaceholder}" width="100%" id="employeeIDSearch"/>
+                  </VBox>
+               </VBox>
+            </smartForm:GroupElement>
+
+            <!-- Grupo de Filtros (Column 2) -->
+            <smartForm:GroupElement class="sapUiResponsiveMargin">
+               <VBox>
+                  <!-- OrderDate -->
+                  <VBox class="sapUiTinyMargin">
+                     <Label text="{i18n>orderDateLabel}" />
+                     <SearchField value="" placeholder="{i18n>orderDatePlaceholder}" width="100%" id="orderDateSearch"/>
+                  </VBox>
+                  <!-- RequiredDate -->
+                  <VBox class="sapUiTinyMargin">
+                     <Label text="{i18n>requiredDateLabel}" />
+                     <SearchField value="" placeholder="{i18n>requiredDatePlaceholder}" width="100%" id="requiredDateSearch"/>
+                  </VBox>
+                  <!-- ShippedDate -->
+                  <VBox class="sapUiTinyMargin">
+                     <Label text="{i18n>shippedDateLabel}" />
+                     <SearchField value="" placeholder="{i18n>shippedDatePlaceholder}" width="100%" id="shippedDateSearch"/>
+                  </VBox>
+               </VBox>
+            </smartForm:GroupElement>
+
+            <!-- Grupo de Filtros (Column 3) -->
+            <smartForm:GroupElement class="sapUiResponsiveMargin">
+               <VBox>
+                  <!-- ShipName -->
+                  <VBox class="sapUiTinyMargin">
+                     <Label text="{i18n>shipNameLabel}" />
+                     <SearchField value="" placeholder="{i18n>shipNamePlaceholder}" width="100%" id="shipNameSearch"/>
+                  </VBox>
+                  <!-- ShipAddress -->
+                  <VBox class="sapUiTinyMargin">
+                     <Label text="{i18n>shipAddressLabel}" />
+                     <SearchField value="" placeholder="{i18n>shipAddressPlaceholder}" width="100%" id="shipAddressSearch"/>
+                  </VBox>
+                  <!-- ShipCity -->
+                  <VBox class="sapUiTinyMargin">
+                     <Label text="{i18n>shipCityLabel}" />
+                     <SearchField value="" placeholder="{i18n>shipCityPlaceholder}" width="100%" id="shipCitySearch"/>
+                  </VBox>
+               </VBox>
+            </smartForm:GroupElement>
+
+            <!-- Grupo de Filtros (Column 4) -->
+            <smartForm:GroupElement class="sapUiResponsiveMargin">
+               <VBox>
+                  <HBox class="sapUiTinyMargin">
+                     <Button text="{i18n>btnFilter}" class="sapUiTinyMargin" type="Emphasized" press="onFilterPress"/> <!-- Filtrar -->
+                  </HBox>
+                  <!-- ShipPostalCode -->
+                  <VBox class="sapUiTinyMargin">
+                     <Label text="{i18n>shipPostalCodeLabel}" />
+                     <SearchField value="" placeholder="{i18n>shipPostalCodePlaceholder}" width="100%" id="shipPostalCodeSearch"/>
+                  </VBox>
+                  <!-- ShipCountry -->
+                  <VBox class="sapUiTinyMargin">
+                     <Label text="{i18n>shipCountryLabel}" />
+                     <SearchField value="" placeholder="{i18n>shipCountryPlaceholder}" width="100%" id="shipCountrySearch"/>
+                  </VBox>
+               </VBox>
+            </smartForm:GroupElement>
+         </smartForm:Group>
+      </smartForm:SmartForm>
+
+      <Panel class="sapUiSmallMargin">
+         <Table id="myList" items="{items>/}">
+            <columns>
+               <Column width="5rem">
+                  <Label text="{i18n>OrderID}"/>
+               </Column>
+               <Column width="6rem">
+                  <Label text="{i18n>CustomerID}"/>
+               </Column>
+               <Column width="6rem">
+                  <Label text="{i18n>EmployeeID}"/>
+               </Column>
+               <Column>
+                  <Label text="{i18n>OrderDate}"/>
+               </Column>
+               <Column width="9rem">
+                  <Label text="{i18n>ShippedDate}"/>
+               </Column>
+               <Column>
+                  <Label text="{i18n>RequiredDate}"/>
+               </Column>
+               <Column width="9rem">
+                  <Label text="{i18n>ShipName}"/>
+               </Column>
+               <Column>
+                  <Label text="{i18n>ShipAddress}"/>
+               </Column>
+               <Column>
+                  <Label text="{i18n>ShipCity}"/>
+               </Column>
+               <Column>
+                  <!-- Coluna para Panel -->
+                  <Label/>
+               </Column>
+            </columns>
+            <items>
+               <ColumnListItem type="Navigation" press="onListItemPress">
+                  <cells>
+                     <Text text="{items>OrderID}"/>
+                     <Text text="{items>CustomerID}"/>
+                     <Text text="{items>EmployeeID}"/>
+                     <Text text="{ path: 'items>OrderDate', formatter: '.formatter.formatDate' }"/>
+                     <main:Badge text="{ path: 'items>ShippedDate', formatter: '.formatter.formatDate' }" colorScheme="5"/>
+                     <Text text="{ path: 'items>RequiredDate', formatter: '.formatter.formatDate' }"/>
+                     <main:Badge text="{items>ShipName}" colorScheme="7"/>
+                     <Text text="{items>ShipAddress}"/>
+                     <Text text="{items>ShipCity}"/>
+                  </cells>
+               </ColumnListItem>
+            </items>
+         </Table>
+      </Panel>
+   </Page>
+</mvc:View>
