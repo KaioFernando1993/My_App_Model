@@ -34,7 +34,6 @@ xmlns="sap.m">
             <items>
                 <ColumnListItem>
                     <cells>
-                        <!-- Aqui preenche com os bindings dos dados -->
                         <Text text="{orderDetails>OrderID}" />
                         <Text text="{orderDetails>ProductID}" />
                         <Text text="{orderDetails>UnitPrice}" />
@@ -105,43 +104,46 @@ xmlns="sap.m">
                 </smartForm:GroupElement>
             </smartForm:Group>
         </smartForm:SmartForm>
-
-        <Table id="" items="{/tableData}">
+        <Table id="tableAgro" items="{orderDetails>/}" growing="true" >
             <columns>
                 <Column>
-                    <Text text="{i18n>opinionsCriterion}" />
+                    <Text text="{i18n>orderID}" />
                 </Column>
                 <Column>
-                    <Text text="{i18n>opinionsFarmA}" />
+                    <Text text="{i18n>productID}" />
                 </Column>
                 <Column>
-                    <Text text="{i18n>opinionsFarmB}" />
+                    <Text text="{i18n>unitPrice}" />
                 </Column>
                 <Column>
-                    <Text text="{i18n>opinionsContract}" />
+                    <Text text="{i18n>quantity}" />
                 </Column>
                 <Column>
-                    <Text text="{i18n>opinionsQuantity}" />
+                    <Text text="{i18n>discount}" />
                 </Column>
                 <Column>
-                    <Text text="{i18n>opinionsDateDelivery}" />
+                    <Text text="{i18n>total}" />
                 </Column>
                 <Column>
                     <Label />
                 </Column>
             </columns>
             <items>
-                <ColumnListItem>
+                <ColumnListItem vAlign="Middle">
                     <cells>
-                        <Input value="{Data}" editable="{viewModel>/isEditMode}" />
-                        <Input value="{CodigoBP}" editable="{viewModel>/isEditMode}" />
-                        <Input value="{Documento}" editable="{viewModel>/isEditMode}" />
-                        <Input value="{Nome}" editable="{viewModel>/isEditMode}" />
-                        <Input value="{Municio}" editable="{viewModel>/isEditMode}" />
-                        <Input value="{StatusBP}" editable="{viewModel>/isEditMode}" />
-                        <Button design="Transparent" press="onEditPress" icon="sap-icon://edit" />
+                        <Label text="{orderDetails>OrderID}" editable="{orderDetails>/editable}" />
+                        <Label text="{orderDetails>ProductID}" editable="{orderDetails>/editable}" />
+                        <Label text="{orderDetails>UnitPrice}" editable="{orderDetails>/editable}" />
+                        <Label text="{orderDetails>Quantity}" editable="{orderDetails>/editable}" />
+                        <Label text="{orderDetails>Discount}" editable="{orderDetails>/editable}" />
+                        <Label text="{= ${orderDetails>UnitPrice} * ${orderDetails>Quantity} * (1 - ${orderDetails>Discount})}" editable="{orderDetails>/editable}" />
+                    <HBox>
+                        <Button id="editButton" type="Transparent" press="onEdit"  visible="true" icon="sap-icon://edit"/>
+                        <Button id="saveButton" type="Transparent" press="onSave" visible="false" icon="sap-icon://save"/>
+                        <Button id="cancelButton" type="Transparent" press="onCancel" visible="false" icon="sap-icon://decline"/>
+                    </HBox>
                     </cells>
-                </ColumnListItem>
+                </ColumnListItem>                
             </items>
         </Table>
     </Panel>
@@ -259,7 +261,7 @@ xmlns="sap.m">
                 text="{i18n>registerOpinion}" 
                 icon="sap-icon://add-activity" 
                 type="Emphasized" 
-                press="onEscapePreventDialogPress" 
+                press="onRegister" 
                 ariaHasPopup="Dialog"/>
             </contentRight>
         </Bar>

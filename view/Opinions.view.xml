@@ -1,0 +1,13 @@
+<mvc:View
+controllerName="application.controller.Opinions"
+xmlns:mvc="sap.ui.core.mvc" 
+xmlns:core="sap.ui.core"
+xmlns="sap.m">
+
+<Page>
+    <Panel>
+        <Title text="Opinions"/>
+    </Panel>
+
+</Page>
+</mvc:View>

@@ -98,7 +98,14 @@
                 {
                     "name": "detail",
                     "pattern": "detail/{OrderID}",
-                    "target": "Targetdetail"
+                    "target": "TargetDetail"
+                },
+                {
+                    "name": "OpinionsRoute",
+                    "pattern": "Opinions",
+                    "target": [
+                        "TargetOpinions"
+                    ]
                 }
             ],
             "targets": {
@@ -109,12 +116,19 @@
                     "viewId": "HomePage",
                     "viewName": "HomePage"
                 },
-                "Targetdetail": {
+                "TargetDetail": {
                     "viewType": "XML",
                     "transition": "slide",
                     "clearControlAggregation": false,
                     "viewId": "detail",
                     "viewName": "Detail"
+                },
+                "TargetOpinions": {
+                    "viewType": "XML",
+                    "transition": "slide",
+                    "clearControlAggregation": false,
+                    "viewId": "Opinions",
+                    "viewName": "Opinions"
                 }
             }
         },

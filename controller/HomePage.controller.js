@@ -61,9 +61,9 @@ sap.ui.define([
             const aFilterConfigs = [
                 { field: "OrderID", controlId: "onSearchOrderId", operator: FilterOperator.EQ, type: "number" },
                 { field: "CustomerID", controlId: "onSearchCodeBp", operator: FilterOperator.Contains, type: "string" },
-                { field: "RequiredDate", controlId: "requiredDateSearch", operator: FilterOperator.EQ, type: "number" },
+                { field: "EmployeeID", controlId: "employeeIDSearch", operator: FilterOperator.EQ, type: "number" },
                 { field: "ShippedDate", controlId: "shippedDateSearch", operator: FilterOperator.EQ, type: "number" },
-                { field: "ShipName", controlId: "shipNameSearch", operator: FilterOperator.EQ, type: "number" },
+                { field: "ShipName", controlId: "shipNameSearch", operator: FilterOperator.Contains, type: "string" },
                 { field: "ShipAddress", controlId: "shipAddressSearch", operator: FilterOperator.Contains, type: "string" },
                 { field: "ShipCity", controlId: "shipCitySearch", operator: FilterOperator.Contains, type: "string" },
                 { field: "ShipPostalCode", controlId: "shipPostalCodeSearch", operator: FilterOperator.EQ, type: "number" },

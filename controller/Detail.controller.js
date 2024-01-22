@@ -44,6 +44,21 @@ sap.ui.define([
 
             // Chame a função para carregar os dados
             this.loadOrderDetails(oArgs.OrderID);
+        },
+        onSearchDetail: function(oEvent) {
+            const sQuery = oEvent.getParameter("query");
+
+            const oTableItems = this.getView().byId("tableDataContract");
+            const oBindingTable = oTableItems.getBinding("items");
+
+            if (oBindingTable) {
+                let aFilters = [];
+                if (sQuery) {
+                    const oFilters = new Filter("ProductID", FilterOperator.EQ, sQuery);
+                    aFilters.push(oFilters);
+                }
+                oBindingTable.filter(aFilters);
+            }
         }
     });
 });
