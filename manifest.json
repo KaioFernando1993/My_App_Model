@@ -106,6 +106,20 @@
                     "target": [
                         "TargetOpinions"
                     ]
+                },
+                {
+                    "name": "teste",
+                    "pattern": "teste",
+                    "target": [
+                        "teste"
+                    ]
+                },
+                {
+                    "name": "Dialog",
+                    "pattern": "Dialog",
+                    "target": [
+                        "Dialog"
+                    ]
                 }
             ],
             "targets": {
@@ -129,6 +143,20 @@
                     "clearControlAggregation": false,
                     "viewId": "Opinions",
                     "viewName": "Opinions"
+                },
+                "teste": {
+                    "viewType": "XML",
+                    "transition": "slide",
+                    "clearControlAggregation": false,
+                    "viewId": "teste",
+                    "viewName": "teste"
+                },
+                "Dialog": {
+                    "viewType": "XML",
+                    "transition": "slide",
+                    "clearControlAggregation": false,
+                    "viewId": "Dialog",
+                    "viewName": "Dialog"
                 }
             }
         },

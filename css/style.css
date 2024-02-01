@@ -3,3 +3,21 @@
 .sapUiForm .sapUiCompGroupElementVBox .sapMLabel:after {
     content: "";
 }
+
+
+/* Cad Opnion*/
+
+.sapVboxBorder {
+    border-radius: 15px 15px 0 0;
+}
+
+
+/* Card Opinion numeros*/
+
+.customTitleClass {
+    font-size: 4rem;
+}
+
+.sapUiFormResLayout>div {
+    padding: 1px;
+}

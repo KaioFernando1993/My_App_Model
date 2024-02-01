@@ -19,6 +19,9 @@ sap.ui.define([
             }
             return "";
 
+        },
+        formatCurrency: function(value) {
+            return parseFloat(value).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
         }
 
     }

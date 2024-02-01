@@ -1,63 +1,81 @@
 <mvc:View controllerName="application.controller.Detail"
 xmlns:smartForm="sap.ui.comp.smartform" 
+xmlns:main="sap.ui.webc.main" 
 xmlns:mvc="sap.ui.core.mvc" 
 xmlns:core="sap.ui.core"
-xmlns:main="sap.ui.webc.main" 
+xmlns:table="sap.ui.table"
 xmlns="sap.m">
 <Page title="{i18n>detailTitle}">
-    <Panel class="sapUiSmallMargin">
+    <Panel class="sapUiTinyMargin">
         <!-- Contract -->
         <VBox>
             <HBox alignItems="Center" justifyContent="SpaceBetween">
-                <Title text="{i18n>contract}" />
+                <Title text="{i18n>details}" />
                 <SearchField width="90%" search="onSearchDetail" />
             </HBox>
         </VBox>
-        <Table id="tableDataContract" items="{orderDetails>/}">
-            <columns>
-                <Column>
-                    <Text text="{i18n>OrderID}" />
-                </Column>
-                <Column>
-                    <Text text="{i18n>ProductID}" />
-                </Column>
-                <Column>
-                    <Text text="{i18n>UnitPrice}" />
-                </Column>
-                <Column>
-                    <Text text="{i18n>Quantity}" />
-                </Column>
-                <Column>
-                    <Text text="{i18n>Discount}" />
-                </Column>
-            </columns>
-            <items>
-                <ColumnListItem>
-                    <cells>
+        <table:Table 
+            id="tableDataContract" 
+            rows="{orderDetails>/}"
+            selectionMode="None"
+            visibleRowCount="5">
+            <table:columns>
+                <table:Column>
+                    <Label text="{i18n>OrderID}" />
+                    <table:template>
                         <Text text="{orderDetails>OrderID}" />
+                    </table:template>                        
+                </table:Column>
+
+                <table:Column>
+                    <Label text="{i18n>ProductID}" />
+                    <table:template>
                         <Text text="{orderDetails>ProductID}" />
-                        <Text text="{orderDetails>UnitPrice}" />
+                    </table:template>                        
+                </table:Column>
+
+                <table:Column>
+                    <Label text="{i18n>UnitPrice}" />
+                    <table:template>
+                        <Text text="{parts: ['orderDetails>UnitPrice', 'orderDetails>Quantity', 'orderDetails>Discount'], formatter: '.calculateTotalPrice'}" />
+                    </table:template>                        
+                </table:Column>                
+                <table:Column>
+                    <Label text="{i18n>Quantity}" />
+                    <table:template>
                         <Text text="{orderDetails>Quantity}" />
+                    </table:template>                        
+                </table:Column>
+
+                <table:Column>
+                    <Label text="{i18n>Discount}" />
+                    <table:template>
                         <Text text="{orderDetails>Discount}" />
-                    </cells>
-                </ColumnListItem>
-            </items>
-        </Table>
+                    </table:template>                        
+                </table:Column>
+                <table:Column>
+                    <Label text="{i18n>DiscountTotal}" />
+                    <table:template>
+                        <Text text="{parts: [{path: 'orderDetails>UnitPrice'}, {path: 'orderDetails>Quantity'}, {path: 'orderDetails>Discount'}], formatter: '.calculateTotalPrice'}" />
+                    </table:template>                        
+                </table:Column>
+            </table:columns>
+        </table:Table>
     </Panel>
     <!-- Agrotools -->
-    <Panel class="sapUiSmallMargin" >
-        <smartForm:SmartForm title="{i18n>agrotools}" id="smartForm" editable="true" useHorizontalLayout="true">
+    <Panel class="sapUiTinyMargin" headerText="{i18n>employee}">
+        <smartForm:SmartForm id="smartForm" editable="true" useHorizontalLayout="true">
             <smartForm:Group>
                 <!-- Column 1 -->
                 <smartForm:GroupElement >
                     <VBox>
                         <VBox class="sapUiTinyMargin">
                             <Label text="{i18n>document}" />
-                            <Input value="{/campo1}" placeholder="{i18n>keySearch}" width="100%" search="" />
+                            <Input value="{/campo1}" placeholder="{i18n>keySearch}" width="90%" search="" />
                         </VBox>
                         <VBox class="sapUiTinyMargin">
                             <Label text="{i18n>municipality}" />
-                            <Select change="handleChange" width="100%">
+                            <Select change="handleChange" width="90%">
                                 <items>
                                     <core:Item text="" />
                                     <core:Item text="" />
@@ -104,51 +122,122 @@ xmlns="sap.m">
                 </smartForm:GroupElement>
             </smartForm:Group>
         </smartForm:SmartForm>
-        <Table id="tableAgro" items="{orderDetails>/}" growing="true" >
-            <columns>
-                <Column>
-                    <Text text="{i18n>orderID}" />
-                </Column>
-                <Column>
-                    <Text text="{i18n>productID}" />
-                </Column>
-                <Column>
-                    <Text text="{i18n>unitPrice}" />
-                </Column>
-                <Column>
-                    <Text text="{i18n>quantity}" />
-                </Column>
-                <Column>
-                    <Text text="{i18n>discount}" />
-                </Column>
-                <Column>
-                    <Text text="{i18n>total}" />
-                </Column>
-                <Column>
-                    <Label />
-                </Column>
-            </columns>
-            <items>
-                <ColumnListItem vAlign="Middle">
-                    <cells>
-                        <Label text="{orderDetails>OrderID}" editable="{orderDetails>/editable}" />
-                        <Label text="{orderDetails>ProductID}" editable="{orderDetails>/editable}" />
-                        <Label text="{orderDetails>UnitPrice}" editable="{orderDetails>/editable}" />
-                        <Label text="{orderDetails>Quantity}" editable="{orderDetails>/editable}" />
-                        <Label text="{orderDetails>Discount}" editable="{orderDetails>/editable}" />
-                        <Label text="{= ${orderDetails>UnitPrice} * ${orderDetails>Quantity} * (1 - ${orderDetails>Discount})}" editable="{orderDetails>/editable}" />
-                    <HBox>
-                        <Button id="editButton" type="Transparent" press="onEdit"  visible="true" icon="sap-icon://edit"/>
-                        <Button id="saveButton" type="Transparent" press="onSave" visible="false" icon="sap-icon://save"/>
-                        <Button id="cancelButton" type="Transparent" press="onCancel" visible="false" icon="sap-icon://decline"/>
-                    </HBox>
-                    </cells>
-                </ColumnListItem>                
-            </items>
-        </Table>
+        <table:Table 
+            id="tableEmployee" 
+            rows="{orderDetails>/}" 
+            selectionMode="None"
+            visibleRowCount="5">
+            <table:columns>
+                <table:Column>
+                    <Label text="{i18n>EmployeeID}" />
+                        <table:template>
+                            <HBox>
+                                <Text 
+                                    text="{orderDetails>OrderID}" 
+                                    visible="{= !${orderDetails>editMode}}"/>
+                                <Input 
+                                    value="{orderDetails>temp/OrderID}" 
+                                    visible="{= ${orderDetails>editMode}}"/>
+                            </HBox>
+                        </table:template>
+                </table:Column>
+                <table:Column>
+                    <Label text="{i18n>LastName}" />
+                        <table:template>
+                            <HBox>
+                                <Text 
+                                    text="{orderDetails>ProductID}" 
+                                    visible="{= !${orderDetails>editMode}}"/>
+                                <Input 
+                                    value="{orderDetails>temp/ProductID}" 
+                                    visible="{= ${orderDetails>editMode}}"/>
+                            </HBox>
+                        </table:template>
+                </table:Column>
+                <table:Column>
+                    <Label text="{i18n>FirstName}" />
+                        <table:template>
+                            <HBox>
+                                <Text 
+                                    text="{orderDetails>UnitPrice}" 
+                                    visible="{= !${orderDetails>editMode}}"/>
+                                <Input 
+                                    value="{orderDetails>temp/UnitPrice}" 
+                                    visible="{= ${orderDetails>editMode}}"/>
+                            </HBox>
+                        </table:template>
+                </table:Column>
+                <table:Column>
+                    <Label text="{i18n>PostalCode}" />
+                        <table:template>
+                            <HBox>
+                                <Text 
+                                    text="{orderDetails>Quantity}" 
+                                    visible="{= !${orderDetails>editMode}}"/>
+                                <Input 
+                                    value="{orderDetails>temp/Quantity}" 
+                                    visible="{= ${orderDetails>editMode}}"/>
+                            </HBox>
+                        </table:template>
+                </table:Column>
+                <table:Column>
+                    <Label text="{i18n>City}" />
+                        <table:template>
+                            <HBox>
+                                <Text
+                                    text="{orderDetails>Discount}" 
+                                    visible="{= !${orderDetails>editMode}}"/>
+                                <Input 
+                                    value="{orderDetails>temp/Discount}" 
+                                    visible="{= ${orderDetails>editMode}}"/>
+                            </HBox>
+                        </table:template>
+                </table:Column>
+                <table:Column>
+                    <Label text="{i18n>Country}" />
+                        <table:template>
+                            <HBox>
+                                <Text 
+                                    text="{orderDetails>UnitPrice}"
+                                    visible="{= !${orderDetails>editMode}}"/>
+                                <Input 
+                                    value="{orderDetails>UnitPrice}"             
+                                    visible="{= ${orderDetails>editMode}}"/>
+                            </HBox>
+                        </table:template>
+                </table:Column>
+                <table:Column>
+                    <table:template>
+                        <HBox>
+                            <Button
+                                    id="editButton"
+                                    type="Transparent"
+                                    press="onEdit"
+									visible="{= !${orderDetails>editMode}}"
+                                    icon="sap-icon://edit"
+                                />
+                                <Button
+                                    id="saveButton"
+                                    type="Accept"
+                                    press="onSave"
+									visible="{= ${orderDetails>editMode}}"
+                                    icon="sap-icon://save"
+                                />
+                                <Button
+                                    id="cancelButton"
+                                    type="Reject"
+                                    press="onCancel"
+									visible="{= ${orderDetails>editMode}}"
+                                    icon="sap-icon://cancel"
+                                />
+                        </HBox>
+                    </table:template>
+                </table:Column>
+            </table:columns>
+        </table:Table>
     </Panel>
     <!-- Criterion -->
-    <Panel class="sapUiSmallMargin" headerText="{i18n>opinions}">
+    <Panel class="sapUiTinyMargin" headerText="{i18n>opinions}">
         <smartForm:SmartForm editable="true" useHorizontalLayout="true">
             <smartForm:Group>
                 <!-- Column 1 -->

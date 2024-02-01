@@ -1,0 +1,72 @@
+<mvc:View controllerName="application.controller.teste"
+    xmlns:main="sap.ui.webc.main"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns:core="sap.ui.core"
+    xmlns="sap.m"
+    width="100%">
+
+<Page title="Clientes e Fornecedores">
+		<HBox
+			class="sapUiTinyMargin"
+			width="100%">
+			<SearchField width="100%" search=".onSearch" showRefreshButton="true" />
+			<Button
+				icon="sap-icon://filter"
+				press="handleOpenDialogSearchContains" />
+		</HBox>
+            
+                
+    <Panel class="sapUiTinyMargin" >
+        <Table id="myList" items="{items>/}">
+           <columns>
+              <Column width="5rem">
+                 <Label text="{i18n>OrderID}"/>
+              </Column>
+              <Column width="6rem">
+                 <Label text="{i18n>CustomerID}"/>
+              </Column>
+              <Column width="6rem">
+                 <Label text="{i18n>EmployeeID}"/>
+              </Column>
+              <Column>
+                 <Label text="{i18n>OrderDate}"/>
+              </Column>
+              <Column width="9rem">
+                 <Label text="{i18n>ShippedDate}"/>
+              </Column>
+              <Column>
+                 <Label text="{i18n>RequiredDate}"/>
+              </Column>
+              <Column width="9rem">
+                 <Label text="{i18n>ShipName}"/>
+              </Column>
+              <Column>
+                 <Label text="{i18n>ShipAddress}"/>
+              </Column>
+              <Column>
+                 <Label text="{i18n>ShipCity}"/>
+              </Column>
+              <Column>
+                 <!-- Coluna para Panel -->
+                 <Label/>
+              </Column>
+           </columns>
+           <items>
+              <ColumnListItem type="Navigation" press="onListItemPress">
+                 <cells>
+                    <Text text="{items>OrderID}"/>
+                    <Text text="{items>CustomerID}"/>
+                    <Text text="{items>EmployeeID}"/>
+                    <Text text="{ path: 'items>OrderDate', formatter: '.formatter.formatDate' }"/>
+                    <main:Badge text="{ path: 'items>ShippedDate', formatter: '.formatter.formatDate' }" colorScheme="5"/>
+                    <Text text="{ path: 'items>RequiredDate', formatter: '.formatter.formatDate' }"/>
+                    <main:Badge text="{items>ShipName}" colorScheme="7"/>
+                    <Text text="{items>ShipAddress}"/>
+                    <Text text="{items>ShipCity}"/>
+                 </cells>
+              </ColumnListItem>
+           </items>
+        </Table>
+     </Panel>
+</Page>
+</mvc:View>

@@ -37,17 +37,17 @@
                   <!-- OrderDate -->
                   <VBox class="sapUiTinyMargin">
                      <Label text="{i18n>orderDateLabel}" />
-                     <SearchField value="" placeholder="{i18n>orderDatePlaceholder}" width="100%" id="orderDateSearch"/>
+                     <DatePicker value="" placeholder="{i18n>orderDatePlaceholder}" width="100%" id="orderDateSearch"/>
                   </VBox>
                   <!-- RequiredDate -->
                   <VBox class="sapUiTinyMargin">
                      <Label text="{i18n>requiredDateLabel}" />
-                     <SearchField value="" placeholder="{i18n>requiredDatePlaceholder}" width="100%" id="requiredDateSearch"/>
+                     <DatePicker value="" placeholder="{i18n>requiredDatePlaceholder}" width="100%" id="requiredDateSearch"/>
                   </VBox>
                   <!-- ShippedDate -->
                   <VBox class="sapUiTinyMargin">
                      <Label text="{i18n>shippedDateLabel}" />
-                     <SearchField value="" placeholder="{i18n>shippedDatePlaceholder}" width="100%" id="shippedDateSearch"/>
+                     <DatePicker value="" placeholder="{i18n>shippedDatePlaceholder}" width="100%" id="shippedDateSearch"/>
                   </VBox>
                </VBox>
             </smartForm:GroupElement>

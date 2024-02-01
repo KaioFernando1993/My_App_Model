@@ -10,9 +10,10 @@ sap.ui.define([
     "sap/m/Dialog",
     "sap/m/Button",
     "sap/m/library",
-    "sap/m/Text"
+    "sap/m/Text",
+    "../model/formatter",
 
-], function(Controller, JSONModel, ODataModel, MessageToast, Filter, FilterOperator, coreLibrary, Dialog, Button, mobileLibrary, Text) {
+], function(Controller, JSONModel, ODataModel, MessageToast, Filter, FilterOperator, coreLibrary, Dialog, Button, mobileLibrary, Text, formatter) {
     "use strict";
 
     // shortcut for sap.m.ButtonType
@@ -25,22 +26,25 @@ sap.ui.define([
     var ValueState = coreLibrary.ValueState;
 
     return Controller.extend("application.controller.Detail", {
+        formatter: formatter,
         onInit: function() {
             const oRouter = this.getOwnerComponent().getRouter();
             oRouter.getRoute("detail").attachPatternMatched(this.onObjectMatched, this);
         },
 
         loadOrderDetails: function(OrderID) {
-            this.byId('tableDataContract').setBusy(true)
+            this.byId('tableDataContract').setBusy(true);
             const oModel = new ODataModel("/northwind/northwind.svc/");
             const oView = this.getView();
             const filter = new Filter("OrderID", FilterOperator.EQ, OrderID);
 
             oModel.read("/Order_Details", {
                 filters: [filter],
-
                 success: function(oData) {
-                    const oJSONModel = new JSONModel(oData.results);
+                    const mappedData = oData.results.map(function(item) {
+                        return Object.assign({}, item, { 'editMode': false });
+                    });
+                    const oJSONModel = new JSONModel(mappedData);
                     oView.setModel(oJSONModel, "orderDetails");
                     this.byId('tableDataContract').setBusy(false);
 
@@ -49,17 +53,23 @@ sap.ui.define([
                     MessageToast.show("Erro ao carregar os dados do serviço OData.");
                     this.byId('tableDataContract').setBusy(false);
                 }.bind(this)
-            })
+            });
         },
 
         onObjectMatched: function(oEvent) {
             // Lógica para lidar com a correspondência de padrões
             const oArgs = oEvent.getParameter("arguments");
-            console.log("Data from HomePage: ", oArgs);
 
             // Chame a função para carregar os dados
             this.loadOrderDetails(oArgs.OrderID);
         },
+
+        calculateTotalPrice: function(unitPrice, quantity, discount) {
+            var totalPrice = unitPrice * quantity * (1 - discount);
+
+            return parseFloat(totalPrice).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
+        },
+
         onSearchDetail: function(oEvent) {
             const sQuery = oEvent.getParameter("query");
 
@@ -75,8 +85,51 @@ sap.ui.define([
                 oBindingTable.filter(aFilters);
             }
         },
+
+        onEdit: function(oEvent) {
+            const context = oEvent.getSource().getBindingContext("orderDetails");
+            const oModel = context.getModel();
+
+            const path = context.getPath();
+            const contextObject = JSON.parse(JSON.stringify(context.getObject()));
+
+            oModel.setProperty(`${path}/editMode`, true);
+            oModel.setProperty(`${path}/temp`, contextObject);
+            this.getView().setModel(oModel, "orderDetails");
+        },
+
+        onSave: function(oEvent) {
+            const context = oEvent.getSource().getBindingContext("orderDetails");
+            const oModel = context.getModel();
+
+            const path = context.getPath();
+
+            oModel.setProperty(`${path}/editMode`, false);
+
+            const oTemp = oModel.getProperty(`${path}/temp`);
+
+            oModel.setProperty(path, oTemp);
+
+            this.getView().setModel(oModel, "orderDetails");
+        },
+
+        onCancel: function(oEvent) {
+            const context = oEvent.getSource().getBindingContext("orderDetails");
+            const oModel = context.getModel();
+
+            const path = context.getPath();
+
+            oModel.setProperty(`${path}/editMode`, false);
+
+
+            const obj = oModel.getProperty(path);
+            delete obj.temp;
+
+            this.getView().setModel(oModel);
+        },
+
         onRegister: function() {
-            const input1 = this.getView().getModel().getProperty("/bpSap");
+            const input1 = this.getView().byId("bpSap").getValue();
 
             if (input1 === "") {
                 this.messageError();
@@ -84,7 +137,6 @@ sap.ui.define([
                 this.messageSuccess();
             }
         },
-
 
         messageSuccess: function() {
             this.oSuccessMessage = new Dialog({
@@ -120,7 +172,7 @@ sap.ui.define([
             });
             this.oErrorMessage.open();
         },
-        // Rota Provisória
+
         onPareceres: function() {
             const oRouter = this.getOwnerComponent().getRouter();
             oRouter.navTo("OpinionsRoute");

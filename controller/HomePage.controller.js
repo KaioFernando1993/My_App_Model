@@ -59,16 +59,17 @@ sap.ui.define([
             const oBinding = oList.getBinding("items");
 
             const aFilterConfigs = [
-                { field: "OrderID", controlId: "onSearchOrderId", operator: FilterOperator.EQ, type: "number" },
-                { field: "CustomerID", controlId: "onSearchCodeBp", operator: FilterOperator.Contains, type: "string" },
-                { field: "EmployeeID", controlId: "employeeIDSearch", operator: FilterOperator.EQ, type: "number" },
-                { field: "ShippedDate", controlId: "shippedDateSearch", operator: FilterOperator.EQ, type: "number" },
-                { field: "ShipName", controlId: "shipNameSearch", operator: FilterOperator.Contains, type: "string" },
-                { field: "ShipAddress", controlId: "shipAddressSearch", operator: FilterOperator.Contains, type: "string" },
-                { field: "ShipCity", controlId: "shipCitySearch", operator: FilterOperator.Contains, type: "string" },
-                { field: "ShipPostalCode", controlId: "shipPostalCodeSearch", operator: FilterOperator.EQ, type: "number" },
-                { field: "ShipCountry", controlId: "shipCountrySearch", operator: FilterOperator.Contains, type: "string" }
-                // Adicione mais campos conforme necessário
+                { field: "OrderID", controlId: "onSearchOrderId", operator: FilterOperator.EQ },
+                { field: "CustomerID", controlId: "onSearchCodeBp", operator: FilterOperator.Contains },
+                { field: "EmployeeID", controlId: "employeeIDSearch", operator: FilterOperator.EQ },
+                { field: "OrderDate", controlId: "orderDateSearch", operator: FilterOperator.EQ },
+                { field: "RequiredDate", controlId: "requiredDateSearch", operator: FilterOperator.EQ },
+                { field: "ShippedDate", controlId: "shippedDateSearch", operator: FilterOperator.EQ },
+                { field: "ShipName", controlId: "shipNameSearch", operator: FilterOperator.Contains },
+                { field: "ShipAddress", controlId: "shipAddressSearch", operator: FilterOperator.Contains },
+                { field: "ShipCity", controlId: "shipCitySearch", operator: FilterOperator.Contains },
+                { field: "ShipPostalCode", controlId: "shipPostalCodeSearch", operator: FilterOperator.EQ },
+                { field: "ShipCountry", controlId: "shipCountrySearch", operator: FilterOperator.Contains }
             ];
 
             const aFilters = aFilterConfigs.reduce((aAccumulatedFilters, oFilterConfig) => {

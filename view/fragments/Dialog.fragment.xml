@@ -1,0 +1,32 @@
+<core:FragmentDefinition
+		xmlns="sap.m"
+		xmlns:core="sap.ui.core">
+	<ViewSettingsDialog id="settingsDialog"
+			confirm="handleConfirm">
+		<filterItems>
+			<ViewSettingsFilterItem text="ID" key="1">
+				<items>
+					<ViewSettingsItem text="{i18n>orderIDLabel}" key="1a" id="onSearchOrderId" />
+					<ViewSettingsItem text="{i18n>customerIDLabel}" key="1a" id="onSearchCodeBp" />
+					<ViewSettingsItem text="{i18n>employeeIDLabel}" key="1a" id="employeeIDSearch" />
+				</items>
+			</ViewSettingsFilterItem>
+			<ViewSettingsFilterItem text="Date" key="1">
+				<items>
+					<ViewSettingsItem text="{i18n>orderDateLabel}" key="1a" id="orderDateSearch" />
+					<ViewSettingsItem text="{i18n>requiredDateLabel}" key="1a" id="requiredDateSearch" />
+					<ViewSettingsItem text="{i18n>shippedDateLabel}" key="1a" id="shippedDateSearch" />
+				</items>
+			</ViewSettingsFilterItem>
+			<ViewSettingsFilterItem text="Ship" key="1">
+				<items>
+					<ViewSettingsItem text="{i18n>shipNameLabel}" key="1a" id="shipNameSearch" />
+					<ViewSettingsItem text="{i18n>shipAddressLabel}" key="1a" id="shipAddressSearch" />
+					<ViewSettingsItem text="{i18n>shipCityLabel}" key="1a" id="shipCitySearch" />
+					<ViewSettingsItem text="{i18n>shipPostalCodeLabel}" key="1a" id="shipPostalCodeSearch" />
+					<ViewSettingsItem text="{i18n>shipCountryLabel}" key="1a" id="shipCountrySearch" />
+				</items>
+			</ViewSettingsFilterItem>
+		</filterItems>
+	</ViewSettingsDialog>
+</core:FragmentDefinition>
